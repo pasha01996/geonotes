@@ -30,7 +30,7 @@
         align-items: center
         flex-direction: row-reverse
         width: 100%
-        height: 25%
+        height: 25vh
     .list-group
         overflow: scroll
         padding: 15px 10px 10px
