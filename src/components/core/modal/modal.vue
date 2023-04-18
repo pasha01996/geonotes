@@ -1,6 +1,13 @@
 <template>
-    <div class="dialog" :class="classBg" v-if="isActive" @click="toggleModal">
-        <div @click.stop class="dialog__content" :class="classWrapp">
+    <div
+        v-if="isActive"
+        class="dialog"
+        @click="toggleModal"
+    >
+        <div
+            class="dialog__content"
+            @click.stop
+            >
             <slot name="content"></slot>
         </div>
     </div>
@@ -12,12 +19,6 @@ const props = defineProps({
   isActive: {
     type: Boolean,
     default: false,
-  },
-  classBg:  {
-    type: String,
-  },
-  classWrapp:  {
-    type: String,
   }
 })
 

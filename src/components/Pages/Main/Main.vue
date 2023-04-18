@@ -22,27 +22,11 @@
 
         </NotesTable>
         
-        <GMapMap
-            class="map"
-            ref="myMapRef"
-            :center=userGeolocation
-            :zoom="10"
-            :disableDefaultUI="true"
-            :options="{
-                zoomControl: false,
-                mapTypeControl: false,
-                streetViewControl: false,
-                fullscreenControl: false,
-            }"
-        >
-            <GMapMarker
-                v-if="DATA"
-                :key="index"
-                v-for="(pos, index) in DATA.markers"
-                :position="pos.cords"
-                :clickable="true"
-            />
-        </GMapMap>
+        <GMap
+            :data="DATA"
+            :user-location="userCoords"
+        />
+
 
         <ModalAddNotes
             v-model:isActive=isActiveModal
@@ -54,75 +38,27 @@
 
 
 <script setup>
+import {onBeforeMount, ref} from 'vue';
+import GMap from "@/components/Pages/Main/map/GMap.vue";
 import NotesTable from '../../NotesTable/NotesTable.vue';
 import ItemNotesTable from '../../NotesTable/ItemNotesTable.vue';
 import ModalAddNotes from './modal/ModalAddNotes.vue';
-import { User } from '../../core/user/user.js';
-import { geolocationAPI } from '../../../geolocationAPI/geolocationAPI.js';
-import { serverAPI } from '../../../serverAPI/serverAPI.js';
-import { storageAPI } from '../../../storageAPI/storageAPI.js';
-import { Endpoints } from '../../../serverAPI/endpoints.js';
-import { storageNames } from '../../../storageAPI/storageNames.js';
-import { ref, watchEffect, watch, onBeforeMount } from 'vue';
+import {serverAPI} from '@/serverAPI/serverAPI';
+import {storageAPI} from '@/storageAPI/storageAPI';
+import {Endpoints} from '@/serverAPI/endpoints';
+import {storageNames} from '@/storageAPI/storageNames';
+import {geolocationAPI} from "@/geolocationAPI/geolocationAPI";
 
-
-let userCoords;
-const myMapRef = ref();
 const DATA = ref(null)
 const isActiveModal = ref(false);
 const endpoints = new Endpoints();
+const userCoords = ref(geolocationAPI.userGeolocationCallback())
 const userId = storageAPI.get(storageNames.userId);
-const userGeolocation = geolocationAPI.userGeolocationCallback();
+
 
 onBeforeMount(async () => {
-    const response = await serverAPI.get(endpoints.userId(userId))
-    DATA.value = response
+    DATA.value = await serverAPI.get(endpoints.userId(userId))
 })
-
-watchEffect(() => {
-    if (userGeolocation.value.lat !== 0) {
-        userCoords = userGeolocation.value;
-    }
-
-    
-});
-
-function addMyButton(map) {
-  const controlZoomUI = document.createElement('div');
-  const buttonMinus = document.createElement('button')
-  const buttonPlus = document.createElement('button')
-
-  buttonMinus.innerText = `-`
-  buttonPlus.innerText = `+`
-  controlZoomUI.classList.add('btn-group-vertical')
-  controlZoomUI.classList.add('flex-column')
-  controlZoomUI.classList.add('m-2')
-  buttonMinus.classList.add('btn')
-  buttonMinus.classList.add('btn-primary')
-  buttonPlus.classList.add('btn')
-  buttonPlus.classList.add('btn-primary')
-  
-  controlZoomUI.appendChild(buttonPlus);
-  controlZoomUI.appendChild(buttonMinus);
-  
-  buttonPlus.addEventListener('click', () => {
-    map.setZoom(map.getZoom() + 1);
-  });
-
-  buttonMinus.addEventListener('click', () => {
-    map.setZoom(map.getZoom() - 1);
-  });
-
-  map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(controlZoomUI); 
-}
-
-watch(myMapRef, googleMap => {
-      if (googleMap) {
-        googleMap.$mapPromise.then(map=> {
-          addMyButton(map)
-        })
-      }
-});
 
 const onAddNote = (text) => {
     const marker = {
@@ -134,11 +70,8 @@ const onAddNote = (text) => {
     console.log(DATA.value.markers)
     isActiveModal.value = false
 };
-
-
-
-
 </script>
+
 
 <style lang="sass">
     .wrapper__main_page
