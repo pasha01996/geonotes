@@ -52,9 +52,8 @@ import {geolocationAPI} from "@/geolocationAPI/geolocationAPI";
 const DATA = ref(null)
 const isActiveModal = ref(false);
 const endpoints = new Endpoints();
-const userCoords = ref(geolocationAPI.userGeolocationCallback())
 const userId = storageAPI.get(storageNames.userId);
-
+const userCoords = ref(geolocationAPI.userGeolocationCallback())
 
 onBeforeMount(async () => {
     DATA.value = await serverAPI.get(endpoints.userId(userId))
@@ -62,12 +61,12 @@ onBeforeMount(async () => {
 
 const onAddNote = (text) => {
     const marker = {
-        cords: userCoords,
+        cords: userCoords.value,
         note: text
     };
+
     DATA.value.markers.push(marker)
     serverAPI.put(endpoints.userId(userId), DATA.value)
-    console.log(DATA.value.markers)
     isActiveModal.value = false
 };
 </script>

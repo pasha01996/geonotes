@@ -1,8 +1,8 @@
 <template>
     <GMapMap
       class="map"
-      ref="myMapRef"
-      :center=userLocation
+      ref="MapRef"
+      :center="userLocation"
       :zoom="10"
       :disableDefaultUI="true"
       :options="{
@@ -12,13 +12,18 @@
           fullscreenControl: false,
       }"
     >
+        <GMapMarker
+          v-if="data"
+          :key="index"
+          v-for="(pos, index) in data.markers"
+          :position="pos.cords"
+          :clickable="true"
+        />
       <GMapMarker
-        v-if="data"
-        :key="index"
-        v-for="(pos, index) in data.markers"
-        :position="pos.cords"
-        :clickable="true"
+        :icon="{url: 'src/assets/iconMyGeo.png', scaledSize: {width: 40, height: 40}}"
+        :position="userLocation"
       />
+
     </GMapMap>
 </template>
 
@@ -36,17 +41,19 @@ const props = defineProps({
         default: {}
     }
 })
-const myMapRef = ref();
+const MapRef = ref();
 
-watch(myMapRef, googleMap => {
+watch(MapRef, googleMap => {
     if (googleMap) {
         googleMap.$mapPromise.then(map=> {
-            addMyButton(map)
+            addZoomButtons(map)
+            addCurrentPositionButton(map)
+
         })
     }
 });
 
-function addMyButton(map) {
+function addZoomButtons(map) {
     const controlZoomUI = document.createElement('div');
     const buttonMinus = document.createElement('button')
     const buttonPlus = document.createElement('button')
@@ -73,5 +80,28 @@ function addMyButton(map) {
     });
 
     map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(controlZoomUI);
+}
+
+function addCurrentPositionButton(map) {
+    const currentPositionButton = document.createElement('button')
+    const iconButton = document.createElement('img')
+
+    currentPositionButton.classList.add('m-2')
+    currentPositionButton.classList.add('d-flex')
+    currentPositionButton.classList.add('justify-content-center')
+    currentPositionButton.style.width = '35px';
+    currentPositionButton.style.height = '35px';
+    iconButton.style.height = '100%';
+    currentPositionButton.classList.add('btn')
+    currentPositionButton.classList.add('btn-primary')
+    iconButton.src = 'src/assets/arrow-geo.png'
+
+    currentPositionButton.appendChild(iconButton)
+
+    currentPositionButton.addEventListener('click', () => {
+        map.panTo(props.userLocation);
+    })
+
+    map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(currentPositionButton);
 }
 </script>
