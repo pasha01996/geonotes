@@ -87,11 +87,14 @@ function addCurrentPositionButton(map) {
     const iconButton = document.createElement('img')
 
     currentPositionButton.classList.add('m-2')
+    currentPositionButton.classList.add('mb-0')
+    
     currentPositionButton.classList.add('d-flex')
     currentPositionButton.classList.add('justify-content-center')
+    iconButton.classList.add('align-self-center')
     currentPositionButton.style.width = '35px';
     currentPositionButton.style.height = '35px';
-    iconButton.style.height = '100%';
+    iconButton.style.height = '70%';
     currentPositionButton.classList.add('btn')
     currentPositionButton.classList.add('btn-primary')
     iconButton.src = 'src/assets/arrow-geo.png'
