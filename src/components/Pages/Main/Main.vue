@@ -64,6 +64,7 @@ import {storageAPI} from '@/storageAPI/storageAPI';
 import {Endpoints} from '@/serverAPI/endpoints';
 import {storageNames} from '@/storageAPI/storageNames';
 import {geolocationAPI} from "@/geolocationAPI/geolocationAPI";
+import CustomButton from "@/components/core/button/customButton.vue";
 
 const DATA = ref(null)
 const isActiveModal = ref(false);

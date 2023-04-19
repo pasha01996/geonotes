@@ -65,11 +65,11 @@ function addZoomButtons(map) {
     buttonPlus.innerText = `+`
     controlZoomUI.classList.add('btn-group-vertical')
     controlZoomUI.classList.add('flex-column')
-    controlZoomUI.classList.add('m-2')
     buttonMinus.classList.add('btn')
     buttonMinus.classList.add('btn-primary')
     buttonPlus.classList.add('btn')
     buttonPlus.classList.add('btn-primary')
+    controlZoomUI.classList.add('zoom-buttons')
 
     controlZoomUI.appendChild(buttonPlus);
     controlZoomUI.appendChild(buttonMinus);
@@ -109,4 +109,10 @@ function addCurrentPositionButton(map) {
 
     map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(currentPositionButton);
 }
+
 </script>
+
+<style lang="sass">
+  .zoom-buttons
+    margin: .5rem .5rem 150px
+</style>
