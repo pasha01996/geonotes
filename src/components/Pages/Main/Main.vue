@@ -9,12 +9,15 @@
             class="button-group d-flex flex-row align-self-center"
         >
             <custom-button
+                class="button-size"
                 icon="https://raw.githubusercontent.com/pasha01996/geonotes/fded66a8a0a0ea8eef782db9a674080b5030ad72/src/assets/layers.svg"
             />
             <custom-button
+                class="button-size"
                 icon="https://raw.githubusercontent.com/pasha01996/geonotes/fded66a8a0a0ea8eef782db9a674080b5030ad72/src/assets/add-square.svg"
             />
             <custom-button
+                class="button-size"
                 icon="https://raw.githubusercontent.com/pasha01996/geonotes/fded66a8a0a0ea8eef782db9a674080b5030ad72/src/assets/settings.svg"
             />
         </div>
@@ -108,7 +111,7 @@ const onAddNote = (text) => {
         column-gap: 20px
         position: absolute
         margin: auto
-        bottom: 50px
+        bottom: 20px
 
     .btn_add_note 
         display: flex
@@ -124,6 +127,9 @@ const onAddNote = (text) => {
         width: 50px
         height: 50px
 
+    .button-size
+        width: 60px
+        height: 60px
 
 @media (max-width: 700px)
     .wrapper__main_page
