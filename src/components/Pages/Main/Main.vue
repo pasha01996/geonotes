@@ -91,7 +91,8 @@ const onAddNote = (text) => {
 
 <style lang="sass">
     .wrapper__main_page
-        overflow: hidden
+        position: fixed
+        overflow-y: scroll !important
         display: flex
         justify-content: center
         width: 100vw
