@@ -1,31 +1,47 @@
 <template>
     <div class="wrapper__main_page">
-        
-        <NotesTable>
-            <template #notes-button>
-                <button 
-                    @click="isActiveModal = true" 
-                    type="button" 
-                    class="btn btn-outline-success btn_add_note"
-                >
-                    + Add new note
-                </button>
-            </template>
-
-            <template #notes-items>
-                <ItemNotesTable
-                    v-if="DATA"
-                    v-for="(text) in DATA.markers"
-                    :value="text.note"
-                />
-            </template>
-
-        </NotesTable>
-        
         <GMap
             :data="DATA"
             :user-location="userCoords"
         />
+
+        <div
+            class="button-group d-flex flex-row align-self-center"
+        >
+            <custom-button
+                icon="https://raw.githubusercontent.com/pasha01996/geonotes/fded66a8a0a0ea8eef782db9a674080b5030ad72/src/assets/layers.svg"
+            />
+            <custom-button
+                icon="https://raw.githubusercontent.com/pasha01996/geonotes/fded66a8a0a0ea8eef782db9a674080b5030ad72/src/assets/add-square.svg"
+            />
+            <custom-button
+                icon="https://raw.githubusercontent.com/pasha01996/geonotes/fded66a8a0a0ea8eef782db9a674080b5030ad72/src/assets/settings.svg"
+            />
+        </div>
+
+
+<!--        <NotesTable>-->
+<!--            <template #notes-button>-->
+<!--                <button -->
+<!--                    @click="isActiveModal = true" -->
+<!--                    type="button" -->
+<!--                    class="btn btn-outline-success btn_add_note"-->
+<!--                >-->
+<!--                    + Add new note-->
+<!--                </button>-->
+<!--            </template>-->
+
+<!--            <template #notes-items>-->
+<!--                <ItemNotesTable-->
+<!--                    v-if="DATA"-->
+<!--                    v-for="(text) in DATA.markers"-->
+<!--                    :value="text.note"-->
+<!--                />-->
+<!--            </template>-->
+
+<!--        </NotesTable>-->
+        
+
 
 
         <ModalAddNotes
@@ -79,9 +95,16 @@ const onAddNote = (text) => {
         width: 100vw
         height: 100vh
 
-    .map 
-        height: 100%
-        width: 100%
+    .map
+        position: relative
+        height: 100vh
+        width: 100vw
+
+    .button-group
+        column-gap: 20px
+        position: absolute
+        margin: auto
+        bottom: 20px
 
     .btn_add_note 
         display: flex
@@ -92,6 +115,11 @@ const onAddNote = (text) => {
         font-weight: 600
         border-radius: 0
         border: 0
+
+    .notes_list_button
+        width: 50px
+        height: 50px
+
 
 @media (max-width: 700px)
     .wrapper__main_page
