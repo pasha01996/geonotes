@@ -20,7 +20,10 @@
           :clickable="true"
         />
       <GMapMarker
-        :icon="{url: './src/assets/iconMyGeo.png', scaledSize: {width: 40, height: 40}}"
+        :icon='{
+          url: "https://raw.githubusercontent.com/pasha01996/geonotes/main/src/assets/iconMyGeo.png",
+          scaledSize: {width: 40, height: 40}
+        }'
         :position="userLocation"
       />
 
@@ -96,7 +99,7 @@ function addCurrentPositionButton(map) {
     iconButton.style.height = '70%';
     currentPositionButton.classList.add('btn')
     currentPositionButton.classList.add('btn-primary')
-    iconButton.src = './src/assets/arrow-geo.png'
+    iconButton.src = 'https://raw.githubusercontent.com/pasha01996/geonotes/main/src/assets/arrow-geo.png'
 
     currentPositionButton.appendChild(iconButton)
 
