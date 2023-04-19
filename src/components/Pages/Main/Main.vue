@@ -90,24 +90,25 @@ const onAddNote = (text) => {
 
 
 <style lang="sass">
+    body
+        width: 100vw
+        height: 100vh
     .wrapper__main_page
         position: fixed
         overflow-y: scroll !important
         display: flex
         justify-content: center
-        width: 100vw
-        height: 100vh
-
+        width: 100%
+        height: 100%
     .map
         position: relative
-        height: 100vh
-        width: 100vw
-
+        height: 100%
+        width: 100%
     .button-group
         column-gap: 20px
         position: absolute
         margin: auto
-        bottom: 20px
+        bottom: 50px
 
     .btn_add_note 
         display: flex
