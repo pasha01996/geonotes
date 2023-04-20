@@ -15,11 +15,11 @@
 .wrapper__notes_table 
     display: flex
     flex-direction: column
-    width: 33%
+    width: 100%
     
 .list-group 
-    height: 100%
-    width: 100%
+    height: 80vh
+    width: 80vw
     background-color: #d1e7dd96
     padding: 30px 15px 20px
     row-gap: 20px
@@ -30,7 +30,7 @@
         align-items: center
         flex-direction: row-reverse
         width: 100%
-        height: 25vh
+        height: 70%
     .list-group
         overflow: scroll
         padding: 15px 10px 10px
