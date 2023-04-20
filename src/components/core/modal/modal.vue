@@ -1,8 +1,7 @@
 <template>
     <div
-        v-if="isActive"
         class="dialog"
-        @click="toggleModal"
+        @click="closeModal"
     >
         <div
             class="dialog__content"
@@ -10,6 +9,7 @@
             >
             <slot name="content"></slot>
         </div>
+
     </div>
 </template>
 
@@ -22,11 +22,11 @@ const props = defineProps({
   }
 })
 
-const emits = defineEmits(['update:isActive'])
-
-const toggleModal = () => {
-  emits('update:isActive')
+const emits = defineEmits(['closeModal'])
+function closeModal() {
+    emits('closeModal')
 }
+
 </script>
 
 
