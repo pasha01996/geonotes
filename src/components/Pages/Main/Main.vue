@@ -91,7 +91,7 @@
 
 
 <script setup>
-import {onBeforeMount, ref} from 'vue';
+import {onBeforeMount, ref, watch} from 'vue';
 import GMap from "@/components/Pages/Main/map/GMap.vue";
 import NotesTable from '../../NotesTable/NotesTable.vue';
 import ItemNotesTable from '../../NotesTable/ItemNotesTable.vue';
@@ -120,7 +120,13 @@ onBeforeMount(async () => {
     DATA.value = await serverAPI.get(endpoints.userId(userId))
 })
 
-const onAddNote = (text) => {
+const hideAllContentModal = () => {
+    isActiveModal.value = false
+    isActiveNotes.value = false
+    isActiveAddNote.value = false
+    isActiveSettings.value = false
+}
+const addNote = (text) => {
     const marker = {
         cords: userCoords.value,
         note: text
@@ -128,8 +134,22 @@ const onAddNote = (text) => {
 
     DATA.value.markers.push(marker)
     serverAPI.put(endpoints.userId(userId), DATA.value)
-    isActiveModal.value = false
+    hideAllContentModal()
+    isActiveNotification.value = true
 };
+
+watch(
+    isActiveAddNote,
+    (newValue, oldValue) => {
+        if (oldValue === true && newValue === false) {
+            setTimeout(() => {
+                isActiveNotification.value = false
+            }, 1000)
+        }
+    },
+    { flush: 'sync', immediate: false }
+)
+
 </script>
 
 
