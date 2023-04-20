@@ -9,14 +9,26 @@
             class="button-group d-flex flex-row align-self-center"
         >
             <custom-button
+                @click="() => {
+                    isActiveModal = true
+                    isActiveNotes = true
+                }"
+
                 class="button-size"
                 icon="https://raw.githubusercontent.com/pasha01996/geonotes/fded66a8a0a0ea8eef782db9a674080b5030ad72/src/assets/layers.svg"
             />
             <custom-button
+                @click="() => {
+                    isActiveModal = true
+                    isActiveAddNote = true
+                }"
                 class="button-size"
                 icon="https://raw.githubusercontent.com/pasha01996/geonotes/fded66a8a0a0ea8eef782db9a674080b5030ad72/src/assets/add-square.svg"
             />
             <custom-button
+                @click="() => {
+                    isActiveModal = true
+                }"
                 class="button-size"
                 icon="https://raw.githubusercontent.com/pasha01996/geonotes/fded66a8a0a0ea8eef782db9a674080b5030ad72/src/assets/settings.svg"
             />
@@ -45,12 +57,34 @@
 <!--        </NotesTable>-->
         
 
+        <Modal
+            v-if="isActiveModal"
+            @close-modal="hideAllContentModal()"
+        >
+            <template #content
+                v-if="isActiveNotes"
+            >
+                <NotesTable>
+                    <template #notes-items>
+                        <ItemNotesTable
+                            v-if="DATA"
+                            v-for="(text) in DATA.markers"
+                            :value="text.note"
+                        />
+                    </template>
+                </NotesTable>
+            </template>
+            <template #content
+                v-if="isActiveAddNote"
+            >
+                <AddNewNote
+                    @onClickAddNote="addNote($event)"
+                />
+            </template>
+        </Modal>
 
-
-        <ModalAddNotes
-            v-model:isActive=isActiveModal
-            @closeModal="isActiveModal = false"
-            @onAddNote="onAddNote($event)"
+        <notification
+            v-if="isActiveNotification"
         />
     </div>
 </template>
@@ -61,16 +95,23 @@ import {onBeforeMount, ref} from 'vue';
 import GMap from "@/components/Pages/Main/map/GMap.vue";
 import NotesTable from '../../NotesTable/NotesTable.vue';
 import ItemNotesTable from '../../NotesTable/ItemNotesTable.vue';
-import ModalAddNotes from './modal/ModalAddNotes.vue';
 import {serverAPI} from '@/serverAPI/serverAPI';
 import {storageAPI} from '@/storageAPI/storageAPI';
 import {Endpoints} from '@/serverAPI/endpoints';
 import {storageNames} from '@/storageAPI/storageNames';
 import {geolocationAPI} from "@/geolocationAPI/geolocationAPI";
 import CustomButton from "@/components/core/button/customButton.vue";
+import Modal from "@/components/core/modal/modal.vue";
+import AddNewNote from "@/components/NotesTable/addNewNote.vue";
+import Notification from "@/components/core/modal/notification.vue";
 
 const DATA = ref(null)
-const isActiveModal = ref(false);
+const isActiveModal = ref(false)
+const isActiveNotification = ref(false)
+const isActiveNotes = ref(false)
+const isActiveAddNote = ref(false)
+const isActiveSettings = ref(false)
+
 const endpoints = new Endpoints();
 const userId = storageAPI.get(storageNames.userId);
 const userCoords = ref(geolocationAPI.userGeolocationCallback())
