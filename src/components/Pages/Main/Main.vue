@@ -35,26 +35,7 @@
         </div>
 
 
-<!--        <NotesTable>-->
-<!--            <template #notes-button>-->
-<!--                <button -->
-<!--                    @click="isActiveModal = true" -->
-<!--                    type="button" -->
-<!--                    class="btn btn-outline-success btn_add_note"-->
-<!--                >-->
-<!--                    + Add new note-->
-<!--                </button>-->
-<!--            </template>-->
 
-<!--            <template #notes-items>-->
-<!--                <ItemNotesTable-->
-<!--                    v-if="DATA"-->
-<!--                    v-for="(text) in DATA.markers"-->
-<!--                    :value="text.note"-->
-<!--                />-->
-<!--            </template>-->
-
-<!--        </NotesTable>-->
         
 
         <Modal
